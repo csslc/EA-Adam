@@ -33,7 +33,7 @@ Paper, codes and pretained models will be released soon.
 ### SwinIR Backbone  
 ![ea-adam](figs/compare_swinir.png)
 
-For more evaluation, please refer to our paper for details.
+For more comparisons, please refer to our paper for details.
 
 
 ### License
