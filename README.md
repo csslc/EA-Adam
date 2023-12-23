@@ -16,42 +16,29 @@ Paper, codes and pretained models will be released soon.
 
 
 ### Update
-- **2023.12.22**: Repo is released.
-
+- **2023.12.23**: Repo is released.
 
 :star: If EA-Adam is helpful to your images or projects, please help star this repo. Thanks! :hugs:
 
-## Overview framework:
+## Overview framework
 ![ea-adam](figs/framework.png)
 
-<details>
-<summary><strong>SRResNet Backbone</strong> (click to expand) </summary>
-
+## Visual Results
+### SRResNet Backbone
 ![ea-adam](figs/compare_srresnet.png)
 
-</details>
-
-<details>
-<summary><strong>RRDB Backbone</strong> (click to expand) </summary>
-
+### RRDB Backbone
 ![ea-adam](figs/compare_rrdb.png)
 
-</details>
-
-<details>
-<summary><strong>SwinIR Backbone</strong> (click to expand) </summary>
-  
+### SwinIR Backbone  
 ![ea-adam](figs/compare_swinir.png)
 
-</details>
 
 
-
-#### Contact
-If you have any questions, please contact: ling-chen.sun@connect.polyu.hk
-
-#### License
+### License
 This project is released under the [Apache 2.0 license](LICENSE).
+
+### Acknowledgement
 
 ### Citations
 If our code helps your research or work, please consider citing our paper.
@@ -65,6 +52,9 @@ The following are BibTeX references:
   year={2023}
 }
 ```
+
+### Contact
+If you have any questions, please feel free to contact: ling-chen.sun@connect.polyu.hk
 
 
 <details>
