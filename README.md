@@ -18,21 +18,24 @@
 ![ea-adam](figs/framework.png)
 
 ## 🌟 Visual Results
-### <summary>SRResNet Backbone (click to expand)</summary>
+<details>
+<summary>SRResNet Backbone (click to expand)</summary>
 <p align="center">
 <img width="900" src="figs/compare_srresnet.png">
 </p>
-
-### <summary>RRDB Backbone (click to expand)</summary>
+</details>
+<details>
+<summary>RRDB Backbone (click to expand)</summary>
 <p align="center">
 <img width="900" src="figs/compare_rrdb.png">
 </p>
-
-### <summary>SwinIR Backbone (click to expand)</summary>
+</details>
+<details>
+<summary>SwinIR Backbone (click to expand)</summary>
 <p align="center">
 <img width="900" src="figs/compare_swinir.png">
 </p>
-
+</details>
 For more comparisons, please refer to our paper for details.
 
 ## ⚙ Dependencies and Installation
@@ -49,11 +52,11 @@ pip install -r requirements.txt
 
 ## 🍭 Quick Inference
 #### Step 1: Download the pretrained models
-| Model Name                | Description                               | GoogleDrive                                                                                       | BaiduNetdisk                                                         |
-|:--------------------------|:------------------------------------------|:--------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------|
-| EA-Adam-srresnet.ckpt     | EA-Adam model with the SRResNet backbone. | download | downloadhttps://pan.baidu.com/s/1uYi0-8nyH35P5rMsLD1J0w              |
-| EA-Adam-rrdb.ckpt         | EA-Adam model with the rrdb backbone.     | download                                                                                          | download                                                             |
-| EA-Adam-swinir-light.ckpt | EA-Adam model with the swinir_L backbone. | download                                                                                          | download                                                             |
+| Model Name                | Description                               | GoogleDrive  | BaiduNetdisk |
+|:--------------------------|:------------------------------------------|:-------------|:-------------|
+| EA-Adam-srresnet.ckpt     | EA-Adam model with the SRResNet backbone. | download     | download     |
+| EA-Adam-rrdb.ckpt         | EA-Adam model with the rrdb backbone.     | download     | download     |
+| EA-Adam-swinir-light.ckpt | EA-Adam model with the swinir_L backbone. | download     | download     |
 
 #### Step 2: Prepare testing data
 You can put the testing images in the `test_input`.
