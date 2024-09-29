@@ -2,8 +2,7 @@
 ## Perception-Distortion Balanced Super-Resolution: A Multi-Objective Optimization Perspective
 
 
-Paper, codes and pretained models will be released soon. 
-
+<a href='https://arxiv.org/abs/2312.15408'><img src='https://img.shields.io/badge/Paper-Arxiv-red'></a>
 
 [Lingchen Sun](https://scholar.google.com/citations?hl=zh-CN&tzom=-480&user=ZCDjTn8AAAAJ)<sup>1,2</sup>
 | [Jie Liang](https://scholar.google.com/citations?hl=zh-CN&user=REWxLZsAAAAJ)<sup>2</sup> | 
@@ -13,28 +12,62 @@ Paper, codes and pretained models will be released soon.
 
 <sup>1</sup>The Hong Kong Polytechnic University, <sup>2</sup>OPPO Research Institute
 
-
-
-### Update
-- **2023.12.23**: Repo is released.
-
 :star: If EA-Adam is helpful to your images or projects, please help star this repo. Thanks! :hugs:
 
-## Overview framework
+## 🌟 Overview framework
 ![ea-adam](figs/framework.png)
 
-## Visual Results
-### SRResNet Backbone
-![ea-adam](figs/compare_srresnet.png)
+## 🌟 Visual Results
+### SRResNet Backbone(click to expand)</summary>
+<p align="center">
+<img width="900" src="figs/compare_srresnet.png">
+</p>
 
-### RRDB Backbone
-![ea-adam](figs/compare_rrdb.png)
+### RRDB Backbone(click to expand)</summary>
+<p align="center">
+<img width="900" src="figs/compare_rrdb.png">
+</p>
 
-### SwinIR Backbone  
-![ea-adam](figs/compare_swinir.png)
+### SwinIR Backbone(click to expand)</summary>
+<p align="center">
+<img width="900" src="figs/compare_swinir.png">
+</p>
 
 For more comparisons, please refer to our paper for details.
 
+## ⚙ Dependencies and Installation
+```shell
+## git clone this repository
+git clone https://github.com/csslc/EA-Adam.git
+cd EA-Adam
+
+# create an environment with python >= 3.7
+conda create -n EA-Adam python=3.7
+conda activate EA-Adam
+pip install -r requirements.txt
+```
+
+## 🍭 Quick Inference
+#### Step 1: Download the pretrained models
+| Model Name                | Description                               | GoogleDrive                                                                           | BaiduNetdisk                                                            |
+|:--------------------------|:------------------------------------------|:--------------------------------------------------------------------------------------|:------------------------------------------------------------------------|
+| EA-Adam-srresnet.ckpt     | EA-Adam model with the SRResNet backbone. | [download](https://drive.google.com/drive/folders/1jM1mxDryPk9CTuFTvYcraP2XIVzbPiw_?usp=drive_link) | [download](https://pan.baidu.com/s/1uYi0-8nyH35P5rMsLD1J0w) (pwd: CCSR) |
+| EA-Adam-rrdb.ckpt         | EA-Adam model with the rrdb backbone.     | download                                                                              | download                                                                |
+| EA-Adam-swinir-light.ckpt | EA-Adam model with the swinir_L backbone. | download                                                                              | download                                                                |
+
+#### Step 2: Prepare testing data
+You can put the testing images in the `test_input`.
+
+#### Step 3: Running testing command
+```
+python test.py \
+--input_image test_input \
+--config configs/mulsrresnet_gan.yml \
+--test_model_path weights/EA-Adam-srresnet.ckpt \
+--root_img output
+```
+
+## 🍭 Train
 
 ### License
 This project is released under the [Apache 2.0 license](LICENSE).
@@ -46,11 +79,11 @@ If our code helps your research or work, please consider citing our paper.
 The following are BibTeX references:
 
 ```
-@article{sun2023eaadam,
+@article{sun2024eaadam,
   title={Perception-Distortion Balanced Super-Resolution: A Multi-Objective Optimization Perspective},
   author={Sun, Lingchen and Liang, Jie and Liu, Shuaizheng and Yong, Hongwei and Zhang, Lei},
-  journal={arXiv preprint arXiv:***},
-  year={2023}
+  journal={IEEE Transactions on Image Processing},
+  year={2024}
 }
 ```
 
