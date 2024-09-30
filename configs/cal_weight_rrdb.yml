@@ -1,0 +1,103 @@
+model: 'fusion'
+experts_model: 'rrdb_dynamic'
+experts_single_model: 'rrdb_dynamic_single'
+expert_model: 'rrdb'
+
+scale: 4
+colors: 3
+range: 1
+num_feat_fusion: 64
+num_feat: 64
+num_block: 23
+num_network: 5
+num_grow_ch: 32
+num_params: 100
+use_bias: True
+pretrain:
+
+## parameters for model training
+patch_size: 128
+batch_size: 16
+data_repeat: 32
+data_augment: 1
+is_train_expert: False
+
+## parameters for perceptual loss
+perceptual_opt:
+  layer_weights:
+    # 'conv5_4': 1
+    'conv1_2': 0.1
+    'conv2_2': 0.1
+    'conv3_4': 1
+    'conv4_4': 1
+    'conv5_4': 1 # before relu
+  vgg_type: vgg19
+  use_input_norm: true
+  range_norm: false
+  perceptual_weight: 1.0
+  style_weight: 0
+  criterion: l1
+
+gan_opt:
+    type: GANLoss
+    gan_type: vanilla
+    real_label_val: 1.0
+    fake_label_val: 0.0
+
+
+is_qat: 0
+epochs: 500
+EA_iter_epoch: 6400
+adam_init_epochs: 500
+adam_epoch: 500
+EA_epoch: 1
+lr: !!float 1e-5
+decays: [100, 200, 300, 400, 500]
+gamma: 0.5
+log_every: 100
+test_every: 1
+log_path: "./experiments"
+log_name: 'test'
+batch_size_EA: 1
+
+## hardware specification
+gpu_ids: [0]
+threads: 8
+
+## data specification
+training_data_path: ['/Flickr2K/Flickr2K_HR',
+                      '/Flickr2K/Flickr2K_LR_bicubic/X4'] #[HR, LR]
+                    
+eval_sets:  
+  names: ['Set5', 'Set14', 'B100', 'Urban100', 'Manga109']
+  HR_paths: ['/Set5/GTmod12',
+              '/Set14/GTmod12',
+              '/B100/HR',
+              '/Urban100/GTmod12',
+              '/Manga109/HR',]
+  LR_paths: ['/Set5/LRbicx4',
+              '/Set14/LRbicx4',
+              '/B100/LR_bicubic/X4',
+              '/Urban100/LRbicx4',
+              '/Manga109/LR_bicubic/X4',]
+fusion_sets:  
+  names: ['div2k']
+  HR_paths: ['/DIV2K/DIV2K_train_HR']
+  LR_paths: ['/DIV2K/DIV2K_train_LR_bicubic/X4']
+  
+# training_data_path: ['/home/notebook/data/group/SunLingchen/dataset/Flickr2K/Flickr2K_HR',
+#                       '/home/notebook/data/group/SunLingchen/dataset/Flickr2K/Flickr2K_LR_bicubic/X4'] #[HR, LR]
+                    
+# data_path: '/home/notebook/data/group/SunLingchen/dataset'
+# eval_sets:  
+#   names: ['Set5', 'Set14', 'B100'] #'Urban100', 'Manga109', 'div2k'
+#   HR_paths: ['/home/notebook/data/group/SunLingchen/dataset/Set5/GTmod12',
+#               '/home/notebook/data/group/SunLingchen/dataset/Set14/GTmod12',
+#               '/home/notebook/data/group/SunLingchen/dataset/B100/HR']
+#   LR_paths: ['/home/notebook/data/group/SunLingchen/dataset/Set5/LRbicx4',
+#               '/home/notebook/data/group/SunLingchen/dataset/Set14/LRbicx4',
+#               '/home/notebook/data/group/SunLingchen/dataset/B100/LR_bicubic/X4']
+# fusion_sets:  
+#   names: ['div2k']
+#   HR_paths: ['/home/notebook/data/group/SunLingchen/dataset/DIV2K/DIV2K_train_HR']
+#   LR_paths: ['/home/notebook/data/group/SunLingchen/dataset/DIV2K/DIV2K_train_LR_bicubic/X4']

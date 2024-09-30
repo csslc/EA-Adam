@@ -1,0 +1,13 @@
+torch>=1.7
+timm
+einops
+pytorch_msssim
+imageio
+scikit-image
+tensorboardX
+pyyaml
+matplotlib
+lpips
+opencv-python-headless
+sklearn
+pyiqa
