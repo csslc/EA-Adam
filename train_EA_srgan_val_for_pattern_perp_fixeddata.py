@@ -20,7 +20,7 @@ from losses.losses import PerceptualLoss, SSIMLoss, GANLoss
 parser = argparse.ArgumentParser(description='EasySR')
 ## yaml configuration files
 parser.add_argument('--config', type=str, default='configs/mulsrresnet_gan.yml', help = 'pre-config file for training')
-parser.add_argument('--resume', type=str, default='/home/notebook/data/group/SunLingchen/code/SimpleIR-main/BasicSR_model/001_MSRResNet_x4_f64b16_DIV2K_1000k_B16G1_wandb/models/net_g_1000000.pth', help = 'resume training or not')
+parser.add_argument('--resume', type=str, default='/BasicSR_model/001_MSRResNet_x4_f64b16_DIV2K_1000k_B16G1_wandb/models/net_g_1000000.pth', help = 'resume training or not')
 parser.add_argument('--is_l1loss', type=float, default= 0.01, help = 'resume training or not')
 parser.add_argument('--is_lpips', type=float, default=False, help = 'resume training or not')
 parser.add_argument('--is_perceptual', type=float, default=1.0, help = 'resume training or not')

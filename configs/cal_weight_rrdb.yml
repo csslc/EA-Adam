@@ -84,20 +84,3 @@ fusion_sets:
   names: ['div2k']
   HR_paths: ['/DIV2K/DIV2K_train_HR']
   LR_paths: ['/DIV2K/DIV2K_train_LR_bicubic/X4']
-  
-# training_data_path: ['/home/notebook/data/group/SunLingchen/dataset/Flickr2K/Flickr2K_HR',
-#                       '/home/notebook/data/group/SunLingchen/dataset/Flickr2K/Flickr2K_LR_bicubic/X4'] #[HR, LR]
-                    
-# data_path: '/home/notebook/data/group/SunLingchen/dataset'
-# eval_sets:  
-#   names: ['Set5', 'Set14', 'B100'] #'Urban100', 'Manga109', 'div2k'
-#   HR_paths: ['/home/notebook/data/group/SunLingchen/dataset/Set5/GTmod12',
-#               '/home/notebook/data/group/SunLingchen/dataset/Set14/GTmod12',
-#               '/home/notebook/data/group/SunLingchen/dataset/B100/HR']
-#   LR_paths: ['/home/notebook/data/group/SunLingchen/dataset/Set5/LRbicx4',
-#               '/home/notebook/data/group/SunLingchen/dataset/Set14/LRbicx4',
-#               '/home/notebook/data/group/SunLingchen/dataset/B100/LR_bicubic/X4']
-# fusion_sets:  
-#   names: ['div2k']
-#   HR_paths: ['/home/notebook/data/group/SunLingchen/dataset/DIV2K/DIV2K_train_HR']
-#   LR_paths: ['/home/notebook/data/group/SunLingchen/dataset/DIV2K/DIV2K_train_LR_bicubic/X4']

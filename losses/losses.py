@@ -335,17 +335,3 @@ class GANLoss(nn.Module):
         # loss_weight is always 1.0 for discriminators
         return loss if is_disc else loss * self.loss_weight
 
-
-if __name__ == '__main__':
-    # layer_weights = {'conv5_4': 1}
-    # perceptual_loss = PerceptualLoss(layer_weights)
-
-    # x = torch.randn((16, 3, 64, 128))
-    # y = torch.randn((16, 3, 64, 128))
-    # print(perceptual_loss(x,y))
-    # input_order = 'CHW'
-    ssim_loss = SSIMLoss()
-
-    x = torch.randn((16, 3, 64, 128))
-    y = torch.randn((16, 3, 64, 128))
-    print(ssim_loss(x,x))

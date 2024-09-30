@@ -12,23 +12,18 @@ import lpips
 from losses.losses import PerceptualLoss, SSIMLoss, GANLoss
 import numpy as np
 import copy
-from losses.DISTS.DISTS_pytorch.DISTS_pt import DISTS
-from EA_operator.sel_model import model_ema
-from losses.LDL_loss import get_refined_artifact_map
 
 parser = argparse.ArgumentParser(description='EasySR')
 ## yaml configuration files
 parser.add_argument('--config', type=str, default='configs/fusion_rrdb.yml', help = 'pre-config file for training')
-parser.add_argument('--expert_path', type=str, default='/home/notebook/data/group/SunLingchen/code/SimpleIR-main/experiments/RRDB_EA-Adam_DF2K_EAiter200-2024-0522-1736/5_23_fusion_13', help = 'resume training or not')
+parser.add_argument('--expert_path', type=str, default='/fusion_experts', help = 'N(popsize) expert models')
 parser.add_argument('--resume_expert', type=str, default=None, help = 'resume the expert model')
-parser.add_argument('--resume_d', type=str, default='/home/notebook/data/group/SunLingchen/code/SimpleIR-main/experiments/RRDB_EA-Adam_DF2K_EAiter200-2024-0522-1736/models/model_d_x4_13_4.pt', help = 'resume training or not')
+parser.add_argument('--resume_d', type=str, default='disc.pt', help = 'resume the discriminator model')
 
 parser.add_argument('--is_l1loss', type=float, default= 0.1, help = 'use l1 loss for optimization')
 parser.add_argument('--is_lpips', type=float, default=False, help = 'use lpips loss for optimization')
-parser.add_argument('--is_dists', type=float, default=False, help = 'use dists loss for optimization')
 parser.add_argument('--is_perceptual', type=float, default= 1.0, help = 'use perceptual loss for optimization')
 parser.add_argument('--is_ssim', type=float, default=False, help = 'use ssim loss for optimization')
-parser.add_argument('--is_LDL', type=float, default=False, help = 'use LDL loss for optimization')
 parser.add_argument('--is_gan', type=float, default=0.005, help = 'use gan loss for optimization')
 
 
@@ -80,7 +75,6 @@ if __name__ == '__main__':
     loss_lpips_func = lpips.LPIPS(net='alex', spatial = False).to(device)
     perceptual_loss = PerceptualLoss(args.perceptual_opt['layer_weights']).to(device)
     ssim_loss = SSIMLoss().to(device)
-    DISTS_func = DISTS().to(device)
     gan_loss = GANLoss(args.gan_opt.get('gan_type')).to(device)
     
     ## load expert model
@@ -126,12 +120,6 @@ if __name__ == '__main__':
         experts_model_para[k] = up_weight
     m_expert.load_state_dict(experts_model_para, strict = False)
 
-    # definition of EMA
-    if args.is_LDL:    
-        m_expert_ema = copy.deepcopy(m_expert)
-        for p in m_expert_ema.parameters():
-            p.requires_grad = False  # copy net_g weight
-        m_expert_ema.eval()
 
     ## resume training
     start_epoch = 1
@@ -213,9 +201,6 @@ if __name__ == '__main__':
         for iter, batch in enumerate(train_dataloader):
             for p in model_d.parameters():
                 p.requires_grad = False
-            if args.is_LDL:
-                for p in m_expert_ema.parameters():
-                    p.requires_grad = False
 
             optimizer.zero_grad()
             lr, hr = batch
@@ -225,9 +210,6 @@ if __name__ == '__main__':
             # _, weight = model(lr)
             # weight = weight/torch.sum(weight, 1).unsqueeze(1).repeat([1,5])
             sr, _ = m_expert(lr, weights)
-            if args.is_LDL:
-                sr_ema, _ = m_expert_ema(lr, weights)
-            # sr = m_expert(lr)
 
             loss_l1 = loss_func(sr, hr)
 
@@ -249,13 +231,7 @@ if __name__ == '__main__':
                     loss_p += args.is_ssim * (1 - ssim_loss(sr*255., hr*255.))
                 else:
                     loss_p += args.is_ssim * (1 - ssim_loss(sr, hr))
-            if args.is_dists:
-            # convert to [-1,1]
-                if args.range == 1:
-                    sr_con, hr_con = sr, hr
-                else:
-                    sr_con, hr_con = sr/255., hr/255.
-                loss_p += args.is_dists * DISTS_func(hr_con, sr_con, require_grad=True, batch_average=True)
+
             if args.is_gan:
                 real_d_pred =  model_d(hr).detach()
                 fake_g_pred = model_d(sr)
@@ -263,19 +239,11 @@ if __name__ == '__main__':
                 l_g_fake = gan_loss(fake_g_pred - torch.mean(real_d_pred), True, is_disc=False)
                 l_g_gan = (l_g_real + l_g_fake) / 2
                 loss_p += args.is_gan * l_g_gan
-            
-            if args.is_LDL:
-                pixel_weight = get_refined_artifact_map(hr, sr, sr_ema, 7)
-                l_g_artifacts = loss_func(torch.mul(pixel_weight, sr), torch.mul(pixel_weight, hr))
-                loss_p += l_g_artifacts
+
 
             loss_p.backward()
             optimizer.step()
             epoch_loss += float(loss_p)
-
-            if args.is_LDL:
-                # update model ema
-                model_ema(m_expert, m_expert_ema, args.ema_decay)
 
             # update model_d
             if args.is_gan:

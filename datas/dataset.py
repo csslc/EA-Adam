@@ -157,17 +157,3 @@ class DATASET(data.Dataset):
 
         hr_image, lr_image = ndarray2tensor(hr_image), ndarray2tensor(lr_image)
         return lr_image, hr_image
-
-if __name__ == '__main__':
-    HR_folder = '/home/notebook/data/group/SunLingchen/dataset/Flickr2K/Flickr2K_HR'
-    LR_folder = '/home/notebook/data/group/SunLingchen/dataset/Flickr2K/Flickr2K_LR_bicubic/X4'
-    argment   = True
-    training_data = DATASET(HR_folder, LR_folder, augment=True, scale=4, colors=3, patch_size=128, repeat=8)
-
-    print("numner of sample: {}".format(len(training_data)))
-    start = time.time()
-    for idx in range(10):
-        lr, hr = training_data[idx]
-        print(hr.shape, lr.shape)
-    end = time.time()
-    print(end - start)
